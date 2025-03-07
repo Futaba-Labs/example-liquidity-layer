@@ -11,6 +11,7 @@ import { utils as coreUtils } from "@wormhole-foundation/sdk-solana-core";
 import "dotenv/config";
 import * as fs from "node:fs";
 import { Config } from "../src/containers";
+import bs58 from 'bs58'
 
 const TOKEN_ROUTER_PROGRAM_ID = "tD8RmtdcV7bzBeuFgyrFc8wvayj988ChccEzRQzo6md";
 
@@ -50,7 +51,8 @@ async function main(argv: string[]) {
     if (process.env.SOLANA_PRIVATE_KEY_1 === undefined) {
         throw new Error("SOLANA_PRIVATE_KEY_1 is undefined");
     }
-    const payer = Keypair.fromSecretKey(Buffer.from(process.env.SOLANA_PRIVATE_KEY_1, "base64"));
+
+    const payer = Keypair.fromSecretKey(Uint8Array.from(bs58.decode(process.env.SOLANA_PRIVATE_KEY_1)));
 
     const [createIx, lookupTable] = await connection.getSlot("finalized").then((slot) =>
         AddressLookupTableProgram.createLookupTable({

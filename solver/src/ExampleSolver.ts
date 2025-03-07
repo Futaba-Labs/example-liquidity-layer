@@ -35,6 +35,9 @@ import {
     SlotCache,
 } from "./containers";
 
+import bs58 from "bs58";
+
+
 export const FAST_INTERVAL_MS: number = 5;
 export const REQUEST_FAST_TIMEOUT_MS: number = 1_000;
 export const REQUEST_SLOW_TIMEOUT_MS: number = 60_000;
@@ -102,7 +105,7 @@ export class ExampleSolver {
     improveOfferEnabled: boolean = false;
     executeOrderEnabled: boolean = false;
     payerMinimumLamports: bigint = 100_000_000n; // 0.1 SOL by default
-    tokenMinimumBalance: bigint = 1_000_000_000n; // 1,000.0 USDC by default
+    tokenMinimumBalance: bigint = 5_000_000n; // 5 USDC by default
 
     constructor(cfg: Config, logger: Logger, baseFee: bigint) {
         this.cfg = cfg;
@@ -165,7 +168,7 @@ export class ExampleSolver {
         payerPrivateKeys
             .filter((k) => k !== undefined)
             .forEach((privateKey) => {
-                const payer = Keypair.fromSecretKey(Buffer.from(privateKey, "base64"));
+                const payer = Keypair.fromSecretKey(Uint8Array.from(bs58.decode(privateKey)));
                 payers.add(payer);
                 logger.info(`Adding payer: ${payer.publicKey.toString()}`);
             });
