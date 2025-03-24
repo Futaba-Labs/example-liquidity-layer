@@ -7,10 +7,12 @@ import "forge-std/console2.sol";
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-
+import {Utils} from "src/shared/Utils.sol";
 import "src/interfaces/ITokenRouter.sol";
 
 contract TestTransfer is Script {
+    using Utils for *;
+
     uint16 immutable _chainId = uint16(vm.envUint("RELEASE_CHAIN_ID"));
     address immutable _token = vm.envAddress("RELEASE_TOKEN_ADDRESS");
     address immutable _router = vm.envAddress("RELEASE_TOKEN_ROUTER_ADDRESS");
@@ -18,7 +20,7 @@ contract TestTransfer is Script {
     // Transfer params.
     uint64 _amountIn = uint64(vm.envUint("TEST_AMOUNT_IN"));
     uint16 _targetChain = uint16(vm.envUint("TEST_TARGET_CHAIN"));
-    bytes32 _redeemer = vm.envBytes32("TEST_REDEEMER");
+    bytes32 _redeemer = vm.envAddress("TEST_REDEEMER").toUniversalAddress();
     bool isFast = vm.envBool("TEST_IS_FAST");
     bytes _redeemerMessage = hex"deadbeef";
     uint64 _maxFee = uint64(vm.envUint("TEST_FEE"));

@@ -32,7 +32,7 @@ abstract contract State is ITokenRouterState, WormholeCctpTokenMessenger {
     uint32 constant NONCE = 0;
     uint8 constant FAST_FINALITY = 200;
     uint24 constant MAX_BPS_FEE = 1000000; // 10,000.00 bps (100%)
-    uint64 constant MIN_FAST_TRANSFER_AMOUNT = 100000000; // $100
+    uint64 constant MIN_FAST_TRANSFER_AMOUNT = 1000000; // $1
 
     // Maximum redeemer payload size.
     uint256 constant MAX_REDEEMER_PAYLOAD_SIZE = 500;
