@@ -10,7 +10,6 @@ services:
   beacon:
     container_name: solana-beacon-1
     image: public.ecr.aws/pyth-network/beacon:v1.1.3
-    platform: linux/amd64
     environment:
       WORMHOLE_NETWORK_ID: ${WORMHOLE_NETWORK_ID}
       WORMHOLE_BOOTSTRAP: ${WORMHOLE_BOOTSTRAP}
